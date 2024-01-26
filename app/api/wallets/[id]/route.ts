@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (req: NextRequest, { params }: { params: { id: number } }, res: NextResponse) => {
   try {
-    const walletID = params.id;
+    const userID = params.id;
     const wallet = await executeQuery({
-      query: 'SELECT * FROM wallets WHERE walletID = ?',
-      values: [walletID],
+      query: 'SELECT * FROM wallets WHERE userID = ?',
+      values: [userID],
     });
     return NextResponse.json(wallet);
   } catch (error) {
