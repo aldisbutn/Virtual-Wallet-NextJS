@@ -1,14 +1,14 @@
 import { executeQuery } from '@/services/db';
-import { Transaction } from '@/types/transactionType';
+import { TransactionType } from '@/types/transactionType';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (req: NextRequest, { params }: { params: { id: number } }, res: NextResponse) => {
   try {
-    const walletID = params.id;
-    const transaction = await executeQuery({
-      query: 'SELECT * FROM transactions WHERE walletID = ?',
-      values: [walletID],
-    }) as Transaction[]
+    const transactionID = params.id;
+    const transaction = (await executeQuery({
+      query: 'SELECT * FROM transactions WHERE transactionID = ?',
+      values: [transactionID],
+    })) as TransactionType[];
     return NextResponse.json(transaction);
   } catch (error) {
     console.log(error);

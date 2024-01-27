@@ -1,18 +1,20 @@
-import { getUser } from '@/utils/getUser';
 import { getUserWallets } from '@/utils/getUserWallets';
-import { getWalletTransactions } from '@/utils/getWalletTransactions';
 import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../api/auth/[...nextauth]/route';
+import CreateWallet from '@/components/CreateWallet/CreateWallet';
+import WalletInfo from '@/components/WalletInfo/WalletInfo';
 
 const Wallets = async () => {
-  // const session = await getServerSession();
-  // console.log(session);
-  const userID = 1
-  const user = await getUser(userID);
-  const wallets = await getUserWallets(userID);
-  const transactions = await getWalletTransactions(userID);
+  const session = await getServerSession(authOptions);
+  const userID = session?.user.id;
+  const wallets = (await getUserWallets(userID)) as WalletType[];
+
   return (
     <div>
-      <h1>Wallets</h1>
+      <CreateWallet />
+      {wallets.map((wallet) => (
+        <WalletInfo key={wallet.walletID} wallet={wallet} />
+      ))}
     </div>
   );
 };

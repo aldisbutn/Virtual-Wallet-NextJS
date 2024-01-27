@@ -1,12 +1,17 @@
-export const createWallet = async () => {
-  const walletData = {
-    userID: 2,
-    name: 'test',
-  };
+type CreateWalletProps = {
+  userID: number;
+  name: string;
+};
+
+export const createWallet = async (props: CreateWalletProps) => {
+  const { userID, name } = props;
   try {
     const response = await fetch('http://localhost:3000/api/wallets', {
       method: 'POST',
-      body: JSON.stringify(walletData),
+      body: JSON.stringify({
+        userID,
+        name,
+      }),
       headers: {
         'Content-Type': 'application/json',
       },

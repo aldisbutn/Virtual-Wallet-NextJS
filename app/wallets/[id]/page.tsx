@@ -1,4 +1,6 @@
-const Wallet = () => {
+const Wallet = ({ params }: { params: { id: number } }) => {
+    const { id } = params;
+    
     return (
         <div>
             

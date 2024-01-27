@@ -15,6 +15,7 @@ export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
+      id: 'credentials',
       credentials: {
         email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' },
@@ -41,7 +42,11 @@ export const authOptions: NextAuthOptions = {
 
           // If password is correct, return user
           if (isPasswordCorrect) {
-            return user[0];
+            return {
+              id: user[0].userID,
+              email: user[0].email,
+              name: user[0].firstName,
+            };
           } else {
             throw new Error('Incorrect password');
           }
@@ -60,16 +65,17 @@ export const authOptions: NextAuthOptions = {
     maxAge: 7 * 24 * 60 * 60,
   },
   callbacks: {
-    jwt({ token, account, user }) {
-      if (account) {
-        token.accessToken = account.access_token;
-        token.id = user?.id;
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub;
+      }
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id;
       }
       return token;
-    },
-    session({ session, token }) {
-      session.user.id = token.id;
-      return session;
     },
   },
 };

@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (req: NextRequest, { params }: { params: { id: number } }, res: NextResponse) => {
   try {
-    const userID = params.id;
+    const walletID = params.id;
     const wallet = await executeQuery({
       query: 'SELECT * FROM wallets WHERE walletID = ?',
-      values: [userID],
-    }) as Wallet[]
+      values: [walletID],
+    }) as WalletType[]
     return NextResponse.json(wallet);
   } catch (error) {
     console.log(error);
