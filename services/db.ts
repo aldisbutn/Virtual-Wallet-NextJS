@@ -26,7 +26,6 @@ export const executeQuery = async ({ query, values }: ExecuteQueryTypes) => {
     const result = await connection.all(query, values);
     return result;
   } catch (error) {
-    console.log(error);
     return { error };
   }
 };

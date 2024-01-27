@@ -8,7 +8,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: number }
     const user = await executeQuery({
       query: 'SELECT * FROM users WHERE userID = ?',
       values: [userID],
-    })
+    }) as User[]
     return NextResponse.json(user);
   } catch (error) {
     console.log(error);

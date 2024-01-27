@@ -1,11 +1,9 @@
-import { NextApiHandler } from 'next';
-import NextAuth, { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-
-import { compare } from 'bcrypt';
 import { executeQuery, getConnection } from '@/services/db';
-import { User } from '@/types/userType';
-
+import { UserType } from '@/types/userType';
+import { compare } from 'bcrypt';
+import NextAuth, { NextAuthOptions } from 'next-auth';
+import { NextApiHandler } from 'next/types';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 type Credentials = {
   email: string;
@@ -31,7 +29,7 @@ export const authOptions: NextAuthOptions = {
           const user = (await executeQuery({
             query: 'SELECT * FROM users WHERE email = ?',
             values: [email],
-          })) as User[];
+          })) as UserType[];
 
           // If no user found, throw error
           if (user.length === 0) {
@@ -60,6 +58,19 @@ export const authOptions: NextAuthOptions = {
   // Keep user logged in for 7 days
   jwt: {
     maxAge: 7 * 24 * 60 * 60,
+  },
+  callbacks: {
+    jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = user?.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.id = token.id;
+      return session;
+    },
   },
 };
 

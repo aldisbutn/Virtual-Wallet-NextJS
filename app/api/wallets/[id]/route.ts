@@ -5,9 +5,9 @@ export const GET = async (req: NextRequest, { params }: { params: { id: number }
   try {
     const userID = params.id;
     const wallet = await executeQuery({
-      query: 'SELECT * FROM wallets WHERE userID = ?',
+      query: 'SELECT * FROM wallets WHERE walletID = ?',
       values: [userID],
-    });
+    }) as Wallet[]
     return NextResponse.json(wallet);
   } catch (error) {
     console.log(error);
