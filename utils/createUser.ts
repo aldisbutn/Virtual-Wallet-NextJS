@@ -1,16 +1,20 @@
-export const createUser = async () => {
-  const userData = {
-    username: 'test',
-    email: 'tester@test.com',
-    password: 'test',
-    firstName: 'test',
-    lastName: 'test',
-    country: 'test',
-  };
+import bcryptjs from 'bcryptjs';
+
+type CreateUserProps = {
+  username: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  country: string;
+};
+
+export const createUser = async (props: CreateUserProps) => {
+  const hashedPassword = bcryptjs.hashSync(props.password, 10);
   try {
     const response = await fetch('http://localhost:3000/api/users', {
       method: 'POST',
-      body: JSON.stringify(userData),
+      body: JSON.stringify({ ...props, password: hashedPassword }),
       headers: {
         'Content-Type': 'application/json',
       },

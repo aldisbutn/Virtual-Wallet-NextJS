@@ -29,7 +29,8 @@ const CreateWallet = () => {
   return (
     <div>
       {showWalletForm ? (
-        <form id='addWalletForm'
+        <form
+          id='addWalletForm'
           onSubmit={(e) => {
             handleAddWallet(e);
           }}

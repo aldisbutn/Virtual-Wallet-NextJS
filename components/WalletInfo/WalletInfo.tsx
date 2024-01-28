@@ -14,11 +14,17 @@ const WalletInfo = ({ wallet }: { wallet: WalletType }) => {
   const [showWalletForm, setShowWalletForm] = useState(false);
   const [walletName, setWalletName] = useState('');
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
-  const incomingTransactions = transactions.slice().filter((transaction) => transaction.type === 'deposit');
-  const outgoingTransactions = transactions.slice().filter((transaction) => transaction.type === 'withdrawal');
-  const totalSum =
+
+  const calculateTotalSum = () => {
+    const incomingTransactions = transactions.slice().filter((transaction) => transaction.type === 'deposit');
+    const outgoingTransactions = transactions.slice().filter((transaction) => transaction.type === 'withdrawal');
+    const totalSum =
     incomingTransactions.reduce((acc, transaction) => acc + transaction.amount, 0) -
     outgoingTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
+    return totalSum;
+  }
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +73,7 @@ const WalletInfo = ({ wallet }: { wallet: WalletType }) => {
       ) : (
         <>
           <Link href={`/wallets/${walletID}`}>{name}</Link>
-          <h2>{totalSum}</h2>
+          <h2>{calculateTotalSum()}</h2>
           <Button
             click={() => {
               setShowWalletForm(true);

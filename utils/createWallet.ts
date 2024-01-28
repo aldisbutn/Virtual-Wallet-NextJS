@@ -4,14 +4,11 @@ type CreateWalletProps = {
 };
 
 export const createWallet = async (props: CreateWalletProps) => {
-  const { userID, name } = props;
+  const walletData = props;
   try {
     const response = await fetch('http://localhost:3000/api/wallets', {
       method: 'POST',
-      body: JSON.stringify({
-        userID,
-        name,
-      }),
+      body: JSON.stringify(walletData),
       headers: {
         'Content-Type': 'application/json',
       },

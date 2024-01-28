@@ -1,6 +1,6 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import Style from '@/components/Header/Header.module.css';
-import { Sign } from 'crypto';
+
 import { getServerSession } from 'next-auth/next';
 import Link from 'next/link';
 import SignOutButton from '../SignOutButton/SignOutButton';
@@ -8,6 +8,10 @@ import SignOutButton from '../SignOutButton/SignOutButton';
 const Header = async () => {
   const session = await getServerSession(authOptions);
   const userName = session?.user.name;
+
+  if (session === null) {
+    return <div>loading...</div>;
+  }
   return (
     <header className={Style.navWrapper}>
       <div className='logoWrapper'>

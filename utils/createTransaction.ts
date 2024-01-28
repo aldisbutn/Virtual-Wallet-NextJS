@@ -1,11 +1,13 @@
-export const createTransaction = async () => {
-  const transactionData = {
-    walletID: 1,
-    type: 'deposit',
-    amount: 100,
-    date: new Date(),
-    fraud: true,
-  };
+type CreateTransactionProps = {
+  walletID: number;
+  type: string;
+  amount: number;
+  date: string;
+  fraud: boolean;
+};
+
+export const createTransaction = async (props: CreateTransactionProps) => {
+  const transactionData = props;
   try {
     const response = await fetch('http://localhost:3000/api/transactions', {
       method: 'POST',
