@@ -20,7 +20,8 @@ const DeleteWalletButton = (props: DeleteWalletButtonProps) => {
         handleWalletDelete(walletID);
       }}
       buttonText={'Delete'}
-      variant={'primary'}
+      variant={'danger'}
+      size='small'
     />
   );
 };

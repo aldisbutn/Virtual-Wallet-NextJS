@@ -1,0 +1,28 @@
+.createTransactionWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.createTransactionForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transactionInput {
+  width: 100%;
+  background-color: #1a3419;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.transactionInput:focus {
+  outline: 2px solid #2b5629;
+}
+
+.createTransactionLabel {
+  color: #9bf098;
+  text-align: center;
+}

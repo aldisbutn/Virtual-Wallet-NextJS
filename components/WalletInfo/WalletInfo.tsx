@@ -6,8 +6,9 @@ import Link from 'next/link';
 import DeleteWalletButton from '../Buttons/DeleteWalletButton/DeleteWalletButton';
 import ShowWalletFormButton from '../Buttons/ShowWalletFormButton/ShowWalletFormButton';
 import RenameWalletForm from '../RenameWalletForm/RenameWalletForm';
+import Style from '@/components/WalletInfo/WalletInfo.module.css';
 
-const WalletInfo = ({ wallet, transactions }: { wallet: WalletType, transactions: TransactionType[] }) => {
+const WalletInfo = ({ wallet, transactions }: { wallet: WalletType; transactions: TransactionType[] }) => {
   const { walletID, userID, name } = wallet;
 
   const [showWalletForm, setShowWalletForm] = useState(false);
@@ -21,17 +22,33 @@ const WalletInfo = ({ wallet, transactions }: { wallet: WalletType, transactions
     return totalSum;
   }, [transactions]);
 
+  const isSumPositive = () => {
+    if (totalSum > 0) {
+      return Style.walletPositive;
+    } else if (totalSum < 0) {
+      return Style.walletNegative;
+    } else {
+      return Style.walletZero;
+    }
+  };
 
   return (
-    <div>
+    <div className={`${Style.walletWrapper} ${isSumPositive()}`}>
       {showWalletForm ? (
-        <RenameWalletForm walletID={walletID} walletName={name} userID={userID} submit={() => setShowWalletForm(false)} />
+        <RenameWalletForm
+          walletID={walletID}
+          walletName={name}
+          userID={userID}
+          submit={() => setShowWalletForm(false)}
+        />
       ) : (
         <>
-          <Link href={`/wallets/${walletID}`}>{name}</Link>
-          <h2>{totalSum}</h2>
-          <ShowWalletFormButton click={() => setShowWalletForm(true)} />
-          <DeleteWalletButton walletID={walletID} userID={userID} />
+          <Link href={`/wallets/${walletID}`} className={Style.walletName}>{name}</Link>
+          <h2>Balance: {totalSum}€</h2>
+          <div className={Style.buttonsWrapper}>
+            <ShowWalletFormButton click={() => setShowWalletForm(true)} />
+            <DeleteWalletButton walletID={walletID} userID={userID} />
+          </div>
         </>
       )}
     </div>

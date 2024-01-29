@@ -3,6 +3,8 @@
 import revalidateTagAction from '@/app/actions';
 import { createTransaction } from '@/utils/createTransaction';
 import { FormEvent, useState } from 'react';
+import Button from '@/components/Buttons/Button/Button';
+import Style from '@/components/CreateTransaction/CreateTransaction.module.css';
 
 const CreateTransaction = ({ params }: { params: { walletID: number } }) => {
   const { walletID } = params;
@@ -21,51 +23,66 @@ const CreateTransaction = ({ params }: { params: { walletID: number } }) => {
       date: new Date().toLocaleString(),
       fraud,
     });
-    revalidateTagAction(`wallet-${walletID}`)
+    revalidateTagAction(`wallet-${walletID}`);
   };
 
   return (
-    <div>
+    <div className={Style.createTransactionWrapper}>
       {showTransactionForm ? (
         <form
+          className={Style.createTransactionForm}
           id='addTransactionForm'
           onSubmit={(e) => {
             handleAddTransaction(e);
           }}
         >
-          <label>
+          <label className={Style.createTransactionLabel}>
             <h2>Transaction type</h2>
             <select
+              className={Style.transactionInput}
               id='transactionType'
               onChange={(e) => {
                 setTransactionType(e.target.value);
               }}
+              required
             >
-              <option disabled selected>Select type</option>
+              <option disabled selected>
+                Select transaction type
+              </option>
               <option value='deposit'>Deposit</option>
               <option value='withdrawal'>Withdrawal</option>
             </select>
           </label>
-          <label>
-            <h2>Enter amount</h2>
+          <label className={Style.createTransactionLabel}>
+            <h2>Enter transaction amount</h2>
             <input
+              className={Style.transactionInput}
               type='number'
               name='transactionAmount'
+              placeholder='Transaction amount...'
               onChange={(e) => {
                 setTransactionAmount(Number(e.target.value));
               }}
+              required
             />
           </label>
-          <button>Add transaction</button>
+          <Button buttonText='Add transaction' variant='primary' />
+          <Button
+            buttonText='Cancel'
+            variant='secondary'
+            click={() => {
+              setShowTransactionForm(false);
+            }}
+          />
         </form>
       ) : (
-        <button
-          onClick={() => {
+        <Button
+          buttonText='Add new transaction'
+          variant='primary'
+          click={() => {
             setShowTransactionForm(true);
           }}
-        >
-          Add new transaction
-        </button>
+        />
       )}
     </div>
   );

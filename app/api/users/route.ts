@@ -16,10 +16,10 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
   try {
-    const { username, email, password, firstName, lastName, country } = await req.json();
+    const { username, email, password, firstName, lastName } = await req.json();
     await executeQuery({
-      query: 'INSERT INTO users (username, email, password, firstName, lastName, country) VALUES (?, ?, ?, ?, ?, ?)',
-      values: [username, email, password, firstName, lastName, country],
+      query: 'INSERT INTO users (username, email, password, firstName, lastName) VALUES (?, ?, ?, ?, ?)',
+      values: [username, email, password, firstName, lastName],
     });
     return NextResponse.json({ message: 'User created' }, { status: 200 });
   } catch (error) {

@@ -5,7 +5,7 @@ import Button from '../Buttons/Button/Button';
 import deleteTransaction from '@/utils/deleteTransaction';
 import revalidateTagAction from '@/app/actions';
 import editTransaction from '@/utils/editTransaction';
-import { useEffect } from 'react';
+import Style from '@/components/TransactionInfo/TransactionInfo.module.css';
 
 const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const { transactionID, walletID, type, amount, date, fraud } = transaction;
@@ -25,18 +25,8 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
 
   return (
     <>
-      <div>
-        <h2>{type}</h2>
-        <p>{amount}</p>
-        <p>{date}</p>
-        <Button
-          click={() => {
-            handleTransactionDelete(transactionID);
-          }}
-          buttonText={'Delete'}
-          variant={'primary'}
-        />
-        <label>
+      <div className={`${Style.transactionWrapper} ${type === 'deposit' ? Style.transactionDeposit : Style.transactionWithdrawal}`}>
+        <label className={Style.fraudCheckboxWrapper}>
           Fraud
           <input
             checked={Boolean(fraud)}
@@ -46,6 +36,16 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
             type='checkbox'
           />
         </label>
+        <h2>{type}</h2>
+        <p>Amount: {amount}</p>
+        <p>{date}</p>
+        <Button
+          click={() => {
+            handleTransactionDelete(transactionID);
+          }}
+          buttonText={'Delete'}
+          variant={'danger'}
+        />
       </div>
     </>
   );

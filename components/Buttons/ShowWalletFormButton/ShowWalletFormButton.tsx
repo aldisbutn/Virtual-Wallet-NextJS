@@ -14,7 +14,8 @@ const ShowWalletFormButton = (props: ShowWalletFormButtonProps) => {
         click(true);
       }}
       buttonText={'Rename'}
-      variant={'primary'}
+      variant={'info'}
+      size='small'
     />
   );
 };

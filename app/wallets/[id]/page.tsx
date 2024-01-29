@@ -16,16 +16,18 @@ const Wallet = async ({ params }: { params: { id: number } }) => {
   const transactions = (await getWalletTransactions(id)) as TransactionType[];
 
   return (
-    <div>
+    <main className='mainPage'>
       <CreateTransaction
         params={{
           walletID: id,
         }}
       />
-      {transactions.map((transaction) => (
-        <TransactionInfo key={transaction.transactionID} transaction={transaction} />
-      ))}
-    </div>
+      <div className='transactionsWrapper'>
+        {transactions.map((transaction) => (
+          <TransactionInfo key={transaction.transactionID} transaction={transaction} />
+        ))}
+      </div>
+    </main>
   );
 };
 

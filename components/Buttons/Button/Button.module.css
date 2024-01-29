@@ -65,10 +65,17 @@
 }
 
 .buttonSmall {
+  padding: 5px 10px;
+  font-size: 14px;
 }
 
 .buttonMedium {
+  padding: 7px 15px;
+  font-size: 16px;
 }
 
 .buttonLarge {
+  padding: 10px 20px;
+  font-size: 18px;
 }
+

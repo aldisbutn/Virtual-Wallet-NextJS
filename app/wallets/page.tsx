@@ -18,12 +18,12 @@ const Wallets = async () => {
   return (
     <main className='mainPage'>
       <CreateWallet />
-      {wallets.map(async (wallet) => {
-        const transactions = await getWalletTransactions(wallet.walletID);
-        return (
-          <WalletInfo key={wallet.walletID} wallet={wallet} transactions={transactions} />
-        );
-      })}
+      <div className='walletsWrapper'>
+        {wallets.map(async (wallet) => {
+          const transactions = await getWalletTransactions(wallet.walletID);
+          return <WalletInfo key={wallet.walletID} wallet={wallet} transactions={transactions} />;
+        })}
+      </div>
     </main>
   );
 };

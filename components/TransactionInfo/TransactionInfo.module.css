@@ -1,0 +1,39 @@
+.transactionWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 200px;
+  height: 160px;
+  padding: 20px 10px;
+  border-radius: 5px;
+  gap: 5px;
+  transition: 0.3s;
+  position: relative;
+}
+
+.transactionDeposit {
+  background-color: #11781175;
+  color: #17a417;
+  border: 2px solid #2b5629;
+
+}
+.transactionDeposit:hover {
+  border: 2px solid #54a350;
+}
+
+.transactionWithdrawal {
+  background-color: #78111175;
+  color: #a71a1a;
+  border: 2px solid #56292b;
+}
+
+.transactionWithdrawal:hover {
+  border: 2px solid #a35454;
+}
+
+.fraudCheckboxWrapper {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
