@@ -6,7 +6,6 @@ type CreateUserProps = {
   password: string;
   firstName: string;
   lastName: string;
-  country: string;
 };
 
 export const createUser = async (props: CreateUserProps) => {

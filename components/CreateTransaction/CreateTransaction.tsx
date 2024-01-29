@@ -1,5 +1,6 @@
 'use client';
 
+import revalidateTagAction from '@/app/actions';
 import { createTransaction } from '@/utils/createTransaction';
 import { FormEvent, useState } from 'react';
 
@@ -20,6 +21,7 @@ const CreateTransaction = ({ params }: { params: { walletID: number } }) => {
       date: new Date().toLocaleString(),
       fraud,
     });
+    revalidateTagAction(`wallet-${walletID}`)
   };
 
   return (

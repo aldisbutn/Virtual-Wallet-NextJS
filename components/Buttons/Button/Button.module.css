@@ -1,0 +1,74 @@
+.button {
+  border: none;
+  border-radius: 5px;
+
+  padding: 7px 15px;
+  color: black;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.buttonPrimary {
+  background-color: #98c7f0;
+  color: #114878;
+}
+.buttonPrimary:hover {
+  background-color: #114878;
+  color: #98c7f0;
+}
+
+.buttonSecondary {
+  background-color: #f0c798;
+  color: #784411;
+}
+.buttonSecondary:hover {
+  background-color: #784411;
+  color: #f0c798;
+}
+
+.buttonSuccess {
+  background-color: #117811;
+  color: #78f011;
+}
+.buttonSuccess:hover {
+  background-color: #78f011;
+  color: #117811;
+}
+
+.buttonDanger {
+  background-color: #781111;
+  color: #f01111;
+}
+.buttonDanger:hover {
+  background-color: #f01111;
+  color: #781111;
+}
+
+.buttonWarning {
+  background-color: #787811;
+  color: #f0f011;
+}
+.buttonWarning:hover {
+  background-color: #f0f011;
+  color: #787811;
+}
+
+.buttonInfo {
+  background-color: #117878;
+  color: #11f0f0;
+}
+.buttonInfo:hover {
+  background-color: #11f0f0;
+  color: #117878;
+}
+
+.buttonSmall {
+}
+
+.buttonMedium {
+}
+
+.buttonLarge {
+}

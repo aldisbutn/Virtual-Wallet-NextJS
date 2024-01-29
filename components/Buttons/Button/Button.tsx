@@ -1,9 +1,9 @@
-import Style from '@/components/Button/Button.module.css';
+import Style from '@/components/Buttons/Button/Button.module.css'
 
 type ButtonProps = {
   buttonText: string;
   click?: () => void;
-  variant: 'primary' | 'secondary';
+  variant: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
   size?: 'small' | 'medium' | 'large';
 };
 
@@ -15,6 +15,14 @@ const Button = (props: ButtonProps) => {
       return Style.buttonPrimary;
     } else if (variant === 'secondary') {
       return Style.buttonSecondary;
+    } else if (variant === 'success') {
+      return Style.buttonSuccess;
+    } else if (variant === 'danger') {
+      return Style.buttonDanger;
+    } else if (variant === 'warning') {
+      return Style.buttonWarning;
+    } else if (variant === 'info') {
+      return Style.buttonInfo;
     }
   };
 

@@ -9,7 +9,7 @@ export const GET = async (req: NextRequest, { params }: { params: { id: number }
       query: 'SELECT * FROM transactions WHERE transactionID = ?',
       values: [transactionID],
     })) as TransactionType[];
-    return NextResponse.json(transaction);
+    return NextResponse.json(transaction[0]);
   } catch (error) {
     console.log(error);
     return NextResponse.json({ message: 'Error getting transaction' }, { status: 500 });
@@ -24,6 +24,7 @@ export const PUT = async (req: NextRequest, { params }: { params: { id: number }
       query: 'UPDATE transactions SET fraud = ? WHERE transactionID = ?',
       values: [fraud, transactionID],
     });
+    console.log(fraud);
     return NextResponse.json({ message: 'Transaction updated' }, { status: 200 });
   } catch (error) {
     console.log(error);

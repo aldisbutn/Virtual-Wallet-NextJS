@@ -1,17 +1,18 @@
 'use client';
 
 import { TransactionType } from '@/types/transactionType';
-import Button from '../Button/Button';
+import Button from '../Buttons/Button/Button';
 import deleteTransaction from '@/utils/deleteTransaction';
 import revalidateTagAction from '@/app/actions';
 import editTransaction from '@/utils/editTransaction';
+import { useEffect } from 'react';
 
 const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
   const { transactionID, walletID, type, amount, date, fraud } = transaction;
 
   const handleTransactionDelete = async (transactionID: number) => {
     await deleteTransaction(transactionID);
-    revalidateTagAction(`transactions-${transactionID}`);
+    revalidateTagAction(`walletTransactions-${walletID}`);
   };
 
   const handleTransactionFraud = async (transactionID: number) => {
@@ -19,8 +20,9 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
       transactionID,
       fraud: !fraud,
     });
-    revalidateTagAction(`transactions-${transactionID}`);
+    revalidateTagAction(`walletTransactions-${walletID}`);
   };
+
   return (
     <>
       <div>

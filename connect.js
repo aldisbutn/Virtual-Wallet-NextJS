@@ -17,7 +17,6 @@ const usersData = [
     password: '$2b$10$E4Wvgg3Spgzh7bXerb3Vau/TR/NhL1aJPdJvSKIKIMTdwuAxm9MFu',
     firstName: 'Aldis',
     lastName: 'Poga',
-    country: 'Latvia',
   },
 ];
 
@@ -50,8 +49,7 @@ db.serialize(() => {
             email TEXT UNIQUE,
             password TEXT,
             firstName TEXT,
-            lastName TEXT,
-            country TEXT
+            lastName TEXT
         )`,
     (err) => {
       if (err) {
@@ -62,7 +60,7 @@ db.serialize(() => {
       usersData.forEach((user) => {
         const { userID, username, email, password, firstName, lastName, country } = user;
         db.run(
-          `INSERT INTO users (userID, username, email, password, firstName, lastName, country) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+          `INSERT INTO users (userID, username, email, password, firstName, lastName) VALUES (?, ?, ?, ?, ?, ?)`,
           [userID, username, email, password, firstName, lastName, country],
           (err) => {
             if (err) {

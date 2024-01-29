@@ -5,5 +5,4 @@ export type UserType = {
   password: string;
   firstName: string;
   lastName: string;
-  country: string;
 };

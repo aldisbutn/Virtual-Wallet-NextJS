@@ -1,13 +1,15 @@
-'use client';
+import { getServerSession } from 'next-auth/next';
+import { redirect } from 'next/navigation';
+import { authOptions } from './api/auth/[...nextauth]/route';
 
-import { signIn, signOut } from 'next-auth/react';
-
-const Home = () => {
+const Home = async () => {
+  const session = await getServerSession(authOptions);
+  if (session === null) {
+    return redirect('auth/login');
+  }
   return (
     <>
       <h1>hello</h1>
-      <button onClick={() => signIn()}>Sign in</button>
-      <button onClick={() => signOut()}>Sign out</button>
     </>
   );
 };

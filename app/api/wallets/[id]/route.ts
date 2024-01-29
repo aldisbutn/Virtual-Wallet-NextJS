@@ -1,13 +1,15 @@
 import { executeQuery } from '@/services/db';
+import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
+import { authOptions } from '../../auth/[...nextauth]/route';
 
 export const GET = async (req: NextRequest, { params }: { params: { id: number } }, res: NextResponse) => {
   try {
     const walletID = params.id;
-    const wallet = await executeQuery({
+    const wallet = (await executeQuery({
       query: 'SELECT * FROM wallets WHERE walletID = ?',
       values: [walletID],
-    }) as WalletType[]
+    })) as WalletType[];
     return NextResponse.json(wallet);
   } catch (error) {
     console.log(error);

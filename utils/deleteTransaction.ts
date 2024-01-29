@@ -3,7 +3,7 @@ const deleteTransaction = async (transactionID: number) => {
     const response = await fetch(`http://localhost:3000/api/transactions/${transactionID}`, {
       method: 'DELETE',
     });
-    console.log(response);
+    console.log(transactionID);
     if (response.ok) {
       console.log('Transaction deleted');
     } else {

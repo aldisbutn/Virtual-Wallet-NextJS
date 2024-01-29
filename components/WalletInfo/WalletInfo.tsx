@@ -1,93 +1,37 @@
 'use client';
 
-import deleteWallet from '@/utils/deleteWallet';
-import Button from '../Button/Button';
-import revalidateTagAction from '@/app/actions';
-import { FormEvent, useEffect, useState } from 'react';
-import editWallet from '@/utils/editWallet';
-import { getWalletTransactions } from '@/utils/getWalletTransactions';
+import { useMemo, useState } from 'react';
 import { TransactionType } from '@/types/transactionType';
 import Link from 'next/link';
+import DeleteWalletButton from '../Buttons/DeleteWalletButton/DeleteWalletButton';
+import ShowWalletFormButton from '../Buttons/ShowWalletFormButton/ShowWalletFormButton';
+import RenameWalletForm from '../RenameWalletForm/RenameWalletForm';
 
-const WalletInfo = ({ wallet }: { wallet: WalletType }) => {
+const WalletInfo = ({ wallet, transactions }: { wallet: WalletType, transactions: TransactionType[] }) => {
   const { walletID, userID, name } = wallet;
+
   const [showWalletForm, setShowWalletForm] = useState(false);
-  const [walletName, setWalletName] = useState('');
-  const [transactions, setTransactions] = useState<TransactionType[]>([]);
 
-  const calculateTotalSum = () => {
-    const incomingTransactions = transactions.slice().filter((transaction) => transaction.type === 'deposit');
-    const outgoingTransactions = transactions.slice().filter((transaction) => transaction.type === 'withdrawal');
+  const totalSum = useMemo(() => {
+    const incomingTransactions = transactions.filter((transaction) => transaction.type === 'deposit');
+    const outgoingTransactions = transactions.filter((transaction) => transaction.type === 'withdrawal');
     const totalSum =
-    incomingTransactions.reduce((acc, transaction) => acc + transaction.amount, 0) -
-    outgoingTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
+      incomingTransactions.reduce((acc, transaction) => acc + transaction.amount, 0) -
+      outgoingTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
     return totalSum;
-  }
+  }, [transactions]);
 
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const transactions = await getWalletTransactions(walletID);
-      setTransactions(transactions);
-    };
-    fetchData();
-  }, []);
-
-  const handleWalletRename = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setShowWalletForm(false);
-    await editWallet({
-      walletID,
-      name: walletName,
-    });
-    revalidateTagAction(`wallets-${userID}`);
-  };
-
-  const handleWalletDelete = async (walletID: number) => {
-    await deleteWallet(walletID);
-    revalidateTagAction(`wallets-${userID}`);
-  };
   return (
     <div>
       {showWalletForm ? (
-        <form
-          id='addWalletForm'
-          onSubmit={(e) => {
-            handleWalletRename(e);
-          }}
-        >
-          <label>
-            <h2>Enter name</h2>
-            <input
-              type='text'
-              name='walletName'
-              defaultValue={name}
-              onChange={(e) => {
-                setWalletName(e.target.value);
-              }}
-            />
-          </label>
-          <button>Add</button>
-        </form>
+        <RenameWalletForm walletID={walletID} walletName={name} userID={userID} submit={() => setShowWalletForm(false)} />
       ) : (
         <>
           <Link href={`/wallets/${walletID}`}>{name}</Link>
-          <h2>{calculateTotalSum()}</h2>
-          <Button
-            click={() => {
-              setShowWalletForm(true);
-            }}
-            buttonText={'Rename'}
-            variant={'primary'}
-          />
-          <Button
-            click={() => {
-              handleWalletDelete(walletID);
-            }}
-            buttonText={'Delete'}
-            variant={'primary'}
-          />
+          <h2>{totalSum}</h2>
+          <ShowWalletFormButton click={() => setShowWalletForm(true)} />
+          <DeleteWalletButton walletID={walletID} userID={userID} />
         </>
       )}
     </div>

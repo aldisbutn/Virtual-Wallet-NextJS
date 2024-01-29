@@ -1,10 +1,29 @@
 .navWrapper {
   display: flex;
-  background-color: lightblue;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  justify-content: center;
+  background-color: #1a793d;
+  padding: 0px 20px;
   height: 60px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 100;
+}
+
+.navContentWrapper {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.userMenuWrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.username {
+  color: #9bf098;
+  font-weight: 600;
+  font-size: 22px;
 }
